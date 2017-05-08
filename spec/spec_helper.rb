@@ -1,16 +1,22 @@
-ENV['RACK_ENV'] = 'test'
+# ENV['RACK_ENV'] = 'test'
 
 require("rspec")
 require("pg")
-require("list")
+require("sinatra/activerecord")
+require("pry")
 require("task")
+require("list")
 
 
 
 
-# RSpec.configure do |config|
-#   config.after(:each) do
-#     DB.exec("DELETE FROM lists *;")
-#     DB.exec("DELETE FROM tasks *;")
-#   end
-# end
+RSpec.configure do |config|
+  config.after(:each) do
+    Task.all().each() do |task|
+      task.destroy()
+    end
+    List.all().each do |list|
+      list.destroy()
+    end
+  end
+end
