@@ -29,11 +29,16 @@ Installation is quick and easy! First you can open this link <!--HEROKU LINK HER
 | behavior |  input   |  output  |
 |----------|:--------:|:--------:|
 <!--SPECS GO HERE-->
- 
+
 ## Authors
 
 * <!--YOUR NAME HERE-->
 
 ## License
+
+Task.find_by(description: "hey")
+Task.find(36)
+@task.update({:list_id => 15})
+
 
 Copyright © 2017 <!--YOUR NAME HERE-->
