@@ -5,5 +5,18 @@
   <label for="description">Redescribe your task:</label>
   <input id="description" name="description" type="text">
 
+
   <button type="submit">Update</button>
-</form> 
+
+</form>
+
+<form action="/add_lists/<%= @task.id() %>" method="post">
+<label for="list_id">Select a List</label>
+<select id='list_id' name='list_id' type='text'>
+  <% @lists.each() do |list| %>
+    <option value="<%= list.id()%>"> <%= list.name() %> </option>
+  <% end %>
+</select>
+
+  <button type="submit">Add task to list</button>
+</form>

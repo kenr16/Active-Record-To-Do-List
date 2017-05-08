@@ -5,7 +5,7 @@ also_reload('lib/**/*.rb')
 require('./lib/task')
 require('./lib/list')
 require('pg')
-
+require('pry')
 
 get('/') do
   @lists = List.all
@@ -19,9 +19,12 @@ end
 
 post('/lists') do
   name = params.fetch("name")
-  list = List.new({:name => name, :id => nil})
-  list.save()
-  erb(:success)
+  @list = List.new({:name => name, :id => nil})
+  if @list.save()
+    erb(:success)
+  else
+    erb(:list_errors)
+  end
 end
 
 get('/lists') do
@@ -63,15 +66,29 @@ delete("/lists/:id") do
   erb(:index)
 end
 
-get('/tasks/:id/edit') do
+get('/tasks/:id') do
   @task = Task.find(params.fetch("id").to_i())
+  @lists = List.all()
   erb(:task_edit)
 end
+# \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 patch("/tasks/:id") do
   description = params.fetch("description")
   @task = Task.find(params.fetch("id").to_i())
   @task.update({:description => description})
   @tasks = Task.all()
+  erb(:index)
+end
+
+
+post("/add_lists/:id") do
+  list_id = params.fetch("list_id")
+  @list = List.find(list_id.to_i())
+  @task = Task.find(params.fetch("id").to_i())
+  @list.tasks().new({:description => @task.description()})
+  @list.save()
+  @lists = List.all
+  @tasks = Task.all
   erb(:index)
 end

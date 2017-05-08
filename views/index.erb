@@ -4,7 +4,7 @@
 
 <ul>
   <% @tasks.not_done().each do |task| %>
-    <li><%= task.description %></li>
+    <li><a href="/tasks/<%= task.id() %>"><%= task.description() %></a></li>
   <% end %>
 </ul>
 
@@ -17,4 +17,24 @@
   <input id="description" name="description" type="text">
 
   <button type="submit">Add task</button>
+</form>
+
+<hr>
+
+<p>Here are all your lists:</p>
+
+<ul>
+  <% @lists.all.each do |list| %>
+    <li><a href="/lists/<%= list.id() %>"><%= list.name %></a></li>
+  <% end %>
+</ul>
+
+<p>Create new list:</p>
+
+<form action="/lists" method="post">
+  <div class="form-group">
+    <label class="form-label" for="name">Assign a name to your list:</label>
+    <input class="form-control" id='name' type="text" name="name" placeholder="List Name" autofocus>
+    <button type="submit" class="button btn">Add List</button>
+  </div>
 </form>
